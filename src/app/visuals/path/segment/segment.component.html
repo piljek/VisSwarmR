@@ -1,0 +1,22 @@
+<svg:g  class="svg-segment">
+    <svg:circle 
+        [attr.cx]="PX(segment.start.first)" 
+        [attr.cy]="PY(segment.start.last)" 
+        fill = "red"
+        stroke = "green"
+        [attr.r]="10"
+        opacity=".91"
+    ></svg:circle>  
+
+    <svg:line  
+    [attr.x1]="PX(segment.start[0])" 
+    [attr.y1]="PY(segment.start[1])" 
+    [attr.x2]="PX(segment.end[0])" 
+    [attr.y2]="PY(segment.end[1])" 
+    stroke = "green"
+    [attr.stroke-width] = "PX(50)"
+    opacity=.1
+    [attr.radius]="70"
+    ></svg:line>
+
+</svg:g>

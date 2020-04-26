@@ -1,0 +1,87 @@
+
+<mat-sidenav-container class="nav-container">
+    <mat-sidenav opened mode="side" class="nav">
+        <vdg-control></vdg-control>
+        <vdg-control-path></vdg-control-path>
+        <vdg-control-obstacle></vdg-control-obstacle>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content class="view">
+
+        <vdg-arena [obstacles]="obstacles" [movers]="movers" [paths]="paths"></vdg-arena>
+        <div class="arena-simulation">
+
+
+
+            <mat-grid-list cols="2" rowHeight="130px">
+
+                <mat-grid-tile>
+                    <div class="container">
+                        <div class="row">
+                            <!-- Animated Simulation -->
+                            <button color="none" class="animationControl" mat-icon-button type="toggleSimulation"
+                                id="playButton" (click)="toggleSimulation()">
+                                <mat-icon class="iconControl" color="primary">
+                                    {{!toggleRun ? 'play_circle_outline' : 'pause_circle_outline'}}
+                                </mat-icon>
+                            </button>
+                            <!-- Stepwise Simulation -->
+                            <button mat-icon-button color="primary" class="initSimulation"
+                                (click)="stepWiseSimulation()">
+                                <mat-icon>arrow_forward</mat-icon>
+                            </button>
+
+                            <!-- <button mat-raised-button (click)="record()" id="toggle-linear">
+                                {{!isRecording ? 'Start recording' : 'Stop recording'}}
+                            </button> -->
+                            <button mat-icon-button (click)="record()" id="toggle-linear">
+                                <!-- <mat-icon *ngIf="!isRecording" color="warn">fiber_manual_record</mat-icon> -->
+                                <mat-icon color="{{!isRecording ? 'warn' : 'primary'}}">
+                                    {{!isRecording ? 'fiber_manual_record' : 'fiber_smart_record'}}</mat-icon>
+                                <!-- <mat-spinner *ngIf="isRecording" color = "warn"></mat-spinner> -->
+                                <!-- {{!isRecording ? <mat-icon color="red">fiber_smart_record</mat-icon> 'Start': 'Stop recording'}} -->
+                            </button>
+
+                            <!-- <input type="checkbox " [(ngModel)]="d.checked" (change)="checkboxClicked(d, $event)" />
+                        <div class="col" *ngFor="let t of d.texts">{{ t }}</div> -->
+                        </div>
+                        <div class="row">
+
+                            <button mat-mini-fab (click)="setFPS(40)" id="b40">40</button>
+                            <button mat-mini-fab (click)="setFPS(25)" id="b25">25</button>
+                            <button mat-mini-fab (click)="setFPS(10)" id="b10">10</button>
+                            <button mat-mini-fab (click)="setFPS(2)" id="b02">2</button>
+                            <div class="fps">FPS</div>
+                        </div>
+                    </div>
+                </mat-grid-tile>
+             
+                <mat-grid-tile>
+                    <div class="container">
+                        <div class="row">
+                            <mat-icon>cloud_download</mat-icon>
+                            <div class="downloadHeader">Download:</div>
+                            <p></p>
+                        </div>
+
+                        <div class="row">
+                            <button mat-raised-button class="downloadData" (click)="download()">
+                                <mat-icon>scatter_plot</mat-icon>
+                                Data
+                            </button>
+                            <button mat-raised-button class="downloadPathData" (click)="downloadPathData()">
+                                <mat-icon>multiline_chart</mat-icon>
+                                Paths
+                            </button>
+                            <button mat-raised-button class="downloadObstacleData" (click)="downloadObstacleData()">
+                                <mat-icon>wallpaper</mat-icon>
+                                Obstacles
+                            </button>
+                        </div>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

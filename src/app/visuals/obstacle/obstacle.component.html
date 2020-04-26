@@ -1,0 +1,25 @@
+<svg:g *ngIf="activateObstacles" class="svg-obstacles" >
+
+
+<svg:circle
+[attr.id] = "'svg-obstacle-' + obstacle.id " 
+[attr.cx]="X(obstacle.x)" 
+[attr.cy]="Y(obstacle.y)" 
+fill = "#C0392B"
+stroke = "#C0392B"
+[attr.r]="X(obstacle.r) + offset()"
+opacity=".5"
+></svg:circle>  
+
+
+<svg:circle
+[attr.id] = "'svg-obstacle-' + obstacle.id " 
+[attr.cx]="X(obstacle.x)" 
+[attr.cy]="Y(obstacle.y)" 
+fill = "#C0392B"
+stroke = "#C0392B"
+[attr.r]="X(obstacle.r)"
+opacity=".8"
+></svg:circle>  
+</svg:g>
+<!-- https://htmlcolorcodes.com/ -->

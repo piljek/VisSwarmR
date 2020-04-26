@@ -1,0 +1,79 @@
+<!-- zor of repulsion -->
+<svg:g *ngIf="debugZor" class="svg-mover-zor" [attr.transform]="'translate(' + PX + ',' + PY + ')'">
+    <svg:circle [attr.id]="'svg-mover-zor-' + zMover.id" 
+    cx="0" 
+    cy="0" 
+    [attr.fill] = "zMover.collisionColor"
+    [attr.stroke] = "zMover.color()"
+    opacity = ".60"
+    [attr.r]="zor()"
+    ></svg:circle>
+</svg:g>
+
+<!-- zor of orientation -->
+<svg:g *ngIf="debugZoo" class="svg-mover-zoo" [attr.transform]="'translate(' + PX + ',' + PY + ')'">
+    <svg:circle [attr.id]="'svg-mover-zoo-' + zMover.id" 
+    cx="0" 
+    cy="0" 
+    [attr.fill] = "zMover.orientationColor"
+    [attr.stroke] = "zMover.color()"
+    [attr.r]="zoo()"
+    opacity = ".60"
+    ></svg:circle>    
+</svg:g>
+
+<!-- zor of attraction -->
+<svg:g *ngIf="debugZoa" class="svg-mover-zoa" [attr.transform]="'translate(' + PX + ',' + PY + ')'">
+    <svg:circle [attr.id]="'svg-mover-zoa-' + zMover.id" 
+    cx="0" 
+    cy="0" 
+    [attr.fill] = "zMover.attractionColor"
+    [attr.stroke] = "zMover.color()"
+    [attr.r]="zoa()"
+    opacity = ".60"
+    ></svg:circle>
+</svg:g>
+
+<!-- desired direction: theta and perception field -->
+<svg:g *ngIf="debugVision" class="svg-mover-theta" [attr.transform]="'translate(' + PX + ',' + PY + ') '">
+
+    <!-- field of perception -->
+    <svg:path
+    [attr.d] = "visionPath"
+    [attr.fill] = "interacting"
+    opacity = ".10"
+    ></svg:path>
+
+    <!-- current moving direction -->
+    <svg:line
+    [attr.id]="'svg-mover-theta-' + zMover.id"
+    x1 = 0
+    y1=0  
+    [attr.stroke]="zMover.color()"        
+    [attr.x2]="visTx"
+    [attr.y2]="visTy"
+    [attr.theta]="zMover.theta"
+    ></svg:line>
+</svg:g>
+
+
+<svg:g *ngIf="debugMaxTurn"  [attr.transform]="'translate(' + PX + ',' + PY + ') '">    
+    <svg:path
+    [attr.d] = "turningPath"
+    fill = "none"
+    [attr.stroke]="zMover.color()"   
+    stroke-width="2"     
+    opacity = ".20"
+    ></svg:path>
+</svg:g>    
+
+<svg:text *ngIf="debugPosition" [attr.transform]="'translate(' + PX + ',' + PY + ') '"
+    id=textPos
+    [attr.x] = 10
+    [attr.y] = 5
+    [attr.stroke]="black"    
+    font-size = "10px"
+    [attr.text] = "info">
+{{info}}
+</svg:text>
+  

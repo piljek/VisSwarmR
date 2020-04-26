@@ -1,0 +1,56 @@
+<!-- Draw path segments. Starting point is drawn, afterwards only segment endings are visualized -->
+<svg:g *ngFor="let segment of path.segments; let i = index">
+
+    <svg:circle
+        [attr.id] = "'svg-path-' + path.id + '-segment-end'" 
+        [attr.cx]="X(segment.end.first)" 
+        [attr.cy]="Y(segment.end.last)" 
+        fill = "#0B5345"
+        stroke = "#0B5345"
+        [attr.r]="10"
+        opacity=".85">
+    </svg:circle>  
+
+    <svg:circle
+        [attr.id] = "'svg-path-' + path.id + '-segment-passing'" 
+        [attr.cx]="X(segment.end.first)" 
+        [attr.cy]="Y(segment.end.last)" 
+        fill = "none"
+        stroke = "#0B5345"
+        [attr.r]="X(path.passingRadius)"
+        opacity="1">
+    </svg:circle>   
+</svg:g>
+
+
+<svg:g class="svg-path">      
+
+    <!-- curved path width -->
+    <svg:path [attr.id] = "'svg-path-' + path.id" 
+        [attr.d]="d3CurveCatmullRom()"    
+        stroke = "#34495E"
+        [attr.stroke-width]="X(this.path.radius*2)" 
+        opacity=.1
+        fill="none"
+        >
+    </svg:path>
+
+    <!-- curved path center -->
+    <svg:path [attr.id] = "'svg-path-' + path.id + '-catmullRom-center-line'" 
+        [attr.d]="d3CurveCatmullRom()"    
+        stroke = "#34495E"
+        [attr.stroke-width]="X(1)" 
+        opacity=.5
+        fill="none"
+    ></svg:path>
+    
+    <!-- linear path segments for debugging -->
+    <svg:path *ngIf="debugPathFollowingVis && debug" [attr.id] = "'svg-path-' + path.id + '-linear-center-line'" 
+        [attr.d]="d3pathLine()"    
+        stroke = "#0B5345"
+        [attr.stroke-width]="X(1)" 
+        opacity=1
+        fill="none"
+    ></svg:path>
+
+</svg:g>

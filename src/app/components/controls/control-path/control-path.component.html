@@ -1,0 +1,67 @@
+<div class="controls-2-model">
+    <mat-card multi="true">
+        <mat-card-header>
+            <mat-card-title>Path Following Parameters</mat-card-title>
+            <mat-card-subtitle>Path creation and following strategy</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header style="position: absolute; right: 0px; top: 0px;">
+                </mat-expansion-panel-header>
+                
+                <div class="modelParams" *ngIf="modelSelection === 'Reynolds (1999)'">
+                    <mat-slide-toggle (change)="activate($event)" [ngModel]="_activate">
+                        Activate path following
+                    </mat-slide-toggle>
+                    <div *ngIf="_activate ">
+                        <mat-list dense>
+                            <mat-list-item>
+                                Path radius:
+                                <mat-slider [min]="1" [max]="200" [thumbLabel]="true" [(ngModel)]="radius" step="1"
+                                    tickInterval="10" (change)=pathRadiusChanged($event)>
+                                </mat-slider>
+                                {{radius}}
+                            </mat-list-item>
+
+                            <mat-list-item>
+                                Segment passing radius:
+                                <mat-slider [min]="1" [max]="200" [thumbLabel]="true" [(ngModel)]="segmentRadius"
+                                    step="1" tickInterval="10" (change)=segmentRadiusChanged($event)>
+                                </mat-slider>
+                                {{segmentRadius}}
+                            </mat-list-item>
+                        </mat-list>
+                        <mat-divider></mat-divider>
+                        <mat-list dense>
+                            <p>Defined Paths:</p>
+                            <mat-list-item>
+                                <mat-radio-group aria-label="Select a path">
+                                    <mat-radio-button checked value="Path 1" (click)="selectPath(0)">Path 1
+                                    </mat-radio-button>
+                                    <mat-radio-button value="Path 2" (click)="selectPath(1)">Path 2</mat-radio-button>
+                                    <mat-radio-button value="Path 3" (click)="selectPath(2)">Path 3</mat-radio-button>
+                                </mat-radio-group>
+                            </mat-list-item>
+                        </mat-list>
+                        <mat-divider></mat-divider>
+                        <mat-list dense>
+                            <p>Path entrance strategy:</p>
+                            <mat-list-item>
+                                <mat-radio-group aria-labelledby="startingSegment-radio-group-label"
+                                    class="startingSegment-radio-group" [(ngModel)]="startingSegment">
+                                    <mat-radio-button class="startingSegment-radio-button"
+                                        *ngFor="let start of startingSegments" [value]="start"
+                                        (click)="selectStartingSegment(start)">
+                                        {{start[1]}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </mat-list-item>
+                        </mat-list>
+
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,8 @@
+<svg:g class="svg-movers" [attr.transform]="'translate(' + PX + ',' + PY + ')'">
+    <svg:path [attr.id]="'svg-mover-' + mover.id" 
+    [attr.d]="bodyForm"    
+    [attr.fill]="mover.color()"
+    [attr.transform]="' rotate(' + (-mover.theta) + ') translate(' + (-mover.bodySize*.5) + ',' + 0 + ')'">
+    </svg:path>
+</svg:g>
+

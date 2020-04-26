@@ -1,0 +1,46 @@
+<div class="controls-2-model">
+    <mat-card multi="true">
+        <mat-card-header>
+            <mat-card-title>Collision Avoidance Behavior</mat-card-title>
+            <mat-card-subtitle>Obstacle avoidance and Wall collision</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header style="position: absolute; right: 0px; top: 0px;">
+                </mat-expansion-panel-header>
+
+                <mat-slide-toggle (change)="activate($event)" [ngModel]="activateObstacles">
+                    Activate obstacle avoidance
+                </mat-slide-toggle>
+                <!-- <div *ngIf="_activate "> -->
+
+                <div class="modelParams" *ngIf="modelSelection === 'Reynolds (1999)'">
+                    <mat-list dense>
+                        <mat-list-item *ngIf="activateObstacles">
+                            <mat-checkbox *ngIf="debug && sth" [(ngModel)]="debug_obstacleOffset"
+                                (change)="obstacleOffsetDebugged($event)">
+                            </mat-checkbox>
+                            Obstacle offset:
+                            <mat-slider [min]="0" [max]="10" [thumbLabel]="false" [(ngModel)]="obstacleOffset" step=".5"
+                                tickInterval="1" (change)=obstacleOffsetChanged($event)>
+                            </mat-slider>
+                            {{obstacleOffset}}
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-checkbox *ngIf="debug" [(ngModel)]="debug_borderOffset"
+                                (change)="borderOffsetDebugged($event)">
+                            </mat-checkbox>
+                            Border offset:
+                            <mat-slider [min]="0" [max]="100" [thumbLabel]="false" [(ngModel)]="borderOffset" step=".1"
+                                tickInterval="10" (change)=borderOffsetChanged($event)>
+                            </mat-slider>
+                            {{borderOffset}}
+                        </mat-list-item>
+
+                    </mat-list>
+
+                </div>
+            </mat-expansion-panel>
+        </mat-card-content>
+    </mat-card>
+</div>

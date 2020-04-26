@@ -1,0 +1,181 @@
+<svg:g *ngIf="debug" class="svg-boids" [attr.transform]="'translate(' + PX(boid.location[0]) + ',' + PY(boid.location[1]) + ')'">
+
+<!-- separation force: collision circles-->
+    <svg:circle *ngIf = "debugNeighboorhoodRadius" [attr.id]="'svg-boid-' + boid.id" 
+    cx="0" 
+    cy="0" 
+    [attr.fill] = "boid.collisionColor"    
+    [attr.r]="5"
+    opacity=".6"
+    [attr.sx] = "boid.location[0]"
+    [attr.sy]="boid.location[1]">    
+    </svg:circle>
+
+
+    <!-- zor of orientation -->
+    <svg:circle *ngIf="debugAlignmentRadius" [attr.id]="'svg-boid-alignment-' + boid.id" 
+    cx="0" 
+    cy="0" 
+    fill = "none"
+    [attr.stroke] = "boid.color()"
+    [attr.r]="PX(alignmentRadius)"
+    opacity = ".10"
+    ></svg:circle>    
+
+
+<!-- zor of attraction -->
+    <svg:circle *ngIf="debugCohesionRadius" [attr.id]="'svg-boid-cohesion-' + boid.id" 
+    cx="0" 
+    cy="0" 
+    fill = "none"
+    [attr.stroke] = "boid.color()"
+    [attr.r]="PX(cohesionRadius)"
+    opacity = ".10"
+    ></svg:circle>
+
+ 
+    
+     <!-- current moving direction -->
+     <svg:line *ngIf="debugNeighboorhoodRadius || debug_wanderDist" 
+     [attr.id]="'svg-boid-theta-' + boid.id"
+     x1 = 0
+     y1=0  
+     [attr.stroke]="boid.color()"        
+     [attr.x2]="visX(boid.theta, boid.wanderD)"
+     [attr.y2]="visY(boid.theta, boid.wanderD)"
+     [attr.theta]="boid.theta"
+     ></svg:line>          
+
+</svg:g>
+
+<svg:g *ngIf="debug" class="wanderDebug">
+
+    <!-- draw neighboorhood radius-->
+    <svg:circle *ngIf="debugNeighboorhoodRadius" [attr.id]="'svg-boid-' + boid.id" 
+    [attr.cx]="PX(boid.location[0])" 
+    [attr.cy]="PY(boid.location[1])" 
+    fill = "none"
+    [attr.stroke] = "boid.color()"
+    [attr.r]="PX(boid.neighborhood_radius)"
+    opacity=".6"
+    ></svg:circle>   
+    
+    <!-- wandering debug-->
+    <!-- circle location-->
+    <svg:circle *ngIf="debug_wanderRadius" [attr.id]="'svg-boid-wanderCircle-' + boid.id" 
+    [attr.cx]="PX(boid.location[0]) + visX(boid.theta, boid.wanderD)" 
+    [attr.cy]="PY(boid.location[1]) + visY(boid.theta, boid.wanderD)" 
+    [attr.fill] = "boid.color()"
+    [attr.stroke] = "black"
+    [attr.r]="PX(boid.wanderR)"
+    opacity=".1"
+    ></svg:circle>  
+
+    <!-- wander start location-->
+    <svg:circle *ngIf="debug_wanderDist" [attr.id]="'svg-boid-wanderStart-' + boid.id" 
+    [attr.cx]="PX(boid.location[0]) + visX(boid.theta, boid.wanderD)" 
+    [attr.cy]="PY(boid.location[1]) + visY(boid.theta, boid.wanderD)" 
+    [attr.fill] = "boid.color()"
+    [attr.stroke] = "boid.color()"
+    [attr.r]="PX(1)"
+    opacity=".6"
+    [attr.wanderTheta]="boid.wanderTheta"    
+    ></svg:circle>  
+
+    <!-- wander target location-->
+    <svg:circle *ngIf="debug_wanderDist" [attr.id]="'svg-boid-wanderTarget-' + boid.id" 
+    [attr.cx]="PX(boid.wanderTarget[0])" 
+    [attr.cy]="PY(boid.wanderTarget[1])" 
+    fill = "red"
+    [attr.r]="PX(1)"
+    opacity=".8"
+    [attr.wanderTarget]="boid.wanderTarget"
+    [attr.theta] = "boid.theta"
+    [attr.thetaChange] = "boid.thetaChange"
+    [attr.wanderTheta] = "boid.wanderTheta"
+    ></svg:circle>  
+
+    <!-- wander connection to wanderTarget point-->
+    <svg:line *ngIf="debug_wanderDist" [attr.id]="'svg-boid-wander-target-connection' + boid.id" 
+    [attr.x1] = "PX(boid.location[0]) + visX(boid.theta, boid.wanderD)"
+    [attr.y1] = "PY(boid.location[1]) + visY(boid.theta, boid.wanderD)"
+    [attr.x2] = "PX(boid.wanderTarget[0])"
+    [attr.y2] = "PY(boid.wanderTarget[1])"
+    stroke="red"
+    fill = "none"  
+    [attr.stroke-width] = "PX(1)"
+    opacity= ".3"
+    ></svg:line>
+   
+</svg:g>
+
+
+
+<svg:g  *ngIf="boid.id === 0" class="svg-targets" [attr.transform]="'translate(' + PX(boid.target[0]) + ',' + PY(boid.target[1]) + ')'">
+    <svg:circle [attr.id]="target" 
+        cx="0" 
+        cy="0" 
+        stroke="none"
+        stroke-width = "2"
+        fill = "none"    
+        [attr.r]="PX(25)">
+    </svg:circle>
+    
+</svg:g>
+
+
+<!-- path following-->
+<svg:g  *ngIf="debug"  class="svg-boids-path-following">
+       
+     <!-- desired direction towards wander target-->
+     <svg:line *ngIf="debugPathFollowing" [attr.id]="'svg-boid-path-future-direction-' + boid.id" 
+     [attr.x1] = "PX(boid.location[0])"
+     [attr.y1] = "PY(boid.location[1])"
+     [attr.x2] = "PX(boid.futurePosition[0])"
+     [attr.y2] = "PY(boid.futurePosition[1])"
+     stroke="gray"
+     fill = "none"  
+     stroke-dasharray=" 3,3"
+     [attr.stroke-width] = "PX(1)"
+     opacity= ".8"
+     ></svg:line>
+     
+     <svg:circle *ngIf="debugPathFollowing" [attr.id]="path-following-segment-target" 
+ 
+     [attr.cx]="PX(pathTarget()[0])" 
+     [attr.cy]="PY(pathTarget()[1])" 
+     stroke="none"
+     stroke-width = "2"
+     [attr.fill]="boid.color()"   
+     opacity = ".8"
+     [attr.r]="PX(2)">
+ </svg:circle>
+    
+
+<!-- line between future position and normal point on path-->
+    <svg:line *ngIf="debug && debugPathFollowing" [attr.id]="'svg-boid-path-normal-' + boid.id"  
+        [attr.x1]= "PX(boid.futurePosition[0])"
+        [attr.y1]= "PY(boid.futurePosition[1])"
+        [attr.x2] = "PX(boid.normalPoint[0])"
+        [attr.y2] = "PY(boid.normalPoint[1])"
+        stroke="gray"
+        stroke-dasharray=" 3,3"
+        [attr.stroke-width] = "PX(1)"
+        opacity= ".8"         
+        [attr.futurePosX] = "(50-boid.location[0])"
+        [attr.futurePosY] = "(250-boid.location[1])"
+        [attr.locationY]= "300 + (250-boid.location[1])"
+        [attr.screenY]= "PY(300 + (250-boid.location[1]))"        
+    ></svg:line>
+
+    <svg:text *ngIf="debugPosition"
+    id=textPos
+    [attr.x] = "PX(boid.location[0] + 10)"
+    [attr.y] = "PY(boid.location[1] + 5)"
+    [attr.stroke]="black"    
+  
+    font-size = "10px"
+    [attr.text] = "info"
+    >{{info}}</svg:text>
+
+</svg:g>

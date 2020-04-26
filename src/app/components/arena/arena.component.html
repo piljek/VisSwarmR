@@ -1,0 +1,28 @@
+<div id="arena-svg-id" class="arena-svg" #container (vdgResized)="onResized($event)">
+
+    <svg #svgArena class="svg-class">
+
+        <g *ngIf="pathFollowingActivated && reynoldsModel" class="path-segments">
+            <g [vdg-path]="path" *ngFor="let path of paths">
+            </g>
+        </g>
+
+        <g class="svg-obstacles" *ngIf="reynoldsModel">
+            <g [vdg-obstacle]="obstacle" *ngFor="let obstacle of obstacles"></g>
+        </g>
+
+        <g class="svg-movers-group">
+            <g [vdg-mover]="mover" *ngFor="let mover of movers"></g>
+
+            <!-- Integrate couzin zonal movers -->
+            <g class="svg-zonal-group" *ngIf="DEBUG && couzinModel">
+                <g [zonalMovers]="zMover" *ngFor="let zMover of movers"></g>
+            </g>
+            <!-- Integrate reynolds boids DEBUG && -->
+            <g class="svg-boid-group" *ngIf="reynoldsModel">
+                <g [vdg-boid]="boid" *ngFor="let boid of movers"></g>
+            </g>
+        </g>
+    </svg>
+    <!-- Container's size is ({{ container.offsetWidth }} | {{container.offsetHeight}} ) -->
+</div>
