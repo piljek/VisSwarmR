@@ -12,7 +12,7 @@ a minimum distance towards others or objects that resemble their motion to align
 of alignment and inclining each other in the zone of attraction.
 
 ## Setup
-VisSwarmR is a pure web project using Angular and d3.js. It does not require a server backend besides being served from a web server. All calculations are done on the client side, and generated data remains local only. To set up VisSwarmR, just clone the project and build using `npm install`. The contents of the built dist-folder can then be deployed on a web server. 
+VisSwarmR is a pure web project using Angular and d3.js. It does not require a server backend besides being served from a web server. All calculations are done on the client side, and generated data remains local only. To set up VisSwarmR, just clone the project and build using `npm install` and `ng build`. The contents of the built dist-folder can then be deployed on a web server or the project can be directly run with `ng serve`. 
 
 ## License information
 The prototype is licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). If you would like to use it for any kind of projects, I would be happy to hear about it! You can contact me on twitter under https://twitter.com/IsaMaunzt
